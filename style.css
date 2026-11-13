@@ -100,7 +100,7 @@ body::after {
   line-height: 1.5;
   overflow-y: auto;
   background: #ffffff;
-  white-space: pre-line;
+  white-space: pre-wrap;
 }
 
 /* messages */
