@@ -79,8 +79,8 @@ body::after {
 }
 
 .site-title {
-  font-family: "Helvetica Now Display W05 Reg", Arial, Helvetica, sans-serif;
-  font-size: 22px;
+  font-family: "Halesworth eText Medium", Arial, Helvetica, sans-serif;
+  font-size: 17px;
   font-weight: 550;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -90,6 +90,7 @@ body::after {
 /* chat window */
 .chatbox {
   margin: 40px 0;
+  font-family: "Helvetica Now Display W05 Reg", Arial, Helvetica, sans-serif;
 }
 
 .chat-window {
@@ -128,6 +129,7 @@ body::after {
   flex: 1;
   padding: 12px;
   border: 1px solid var(--loreal-gray);
+  font-family: "Helvetica Now Display W05 Reg", Arial, Helvetica, sans-serif;
   font-size: 18px;
 }
 
