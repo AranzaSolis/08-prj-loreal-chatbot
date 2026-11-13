@@ -2,6 +2,7 @@
 const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
+const sendButton = chatForm.querySelector("button");
 const workerUrl =
   "https://solitary-firefly-f54b.aranza-solis-almanza.workers.dev/";
 
@@ -14,7 +15,11 @@ const messages = [
   },
 ];
 
-// Set initial message
+// Show only the current exchange while messages keeps the full history.
+function showCurrentExchange(message, reply = "Thinking...") {
+  chatWindow.textContent = `You: ${message}\n\n${reply}`;
+}
+
 chatWindow.textContent = "👋 Hello! How can I help you today?";
 
 /* Handle form submit */
@@ -22,8 +27,13 @@ chatForm.addEventListener("submit", async (e) => {
   e.preventDefault();
 
   const message = userInput.value.trim();
+  if (!message || sendButton.disabled) {
+    return;
+  }
+
   messages.push({ role: "user", content: message });
-  chatWindow.textContent = `You: ${message}\n\nThinking...`;
+  showCurrentExchange(message);
+  sendButton.disabled = true;
 
   try {
     // Send the full conversation to the class-hosted Cloudflare Worker.
@@ -44,12 +54,15 @@ chatForm.addEventListener("submit", async (e) => {
 
     // Save the assistant's reply for the next message.
     messages.push({ role: "assistant", content: reply });
-    chatWindow.textContent = `You: ${message}\n\n${reply}`;
+    showCurrentExchange(message, reply);
   } catch (error) {
     console.error("Chat request failed:", error);
+    // Do not keep a message that the assistant could not answer.
+    messages.pop();
     chatWindow.textContent =
       "Sorry, something went wrong. Please try again later.";
+  } finally {
+    sendButton.disabled = false;
+    userInput.value = "";
   }
-
-  userInput.value = "";
 });
